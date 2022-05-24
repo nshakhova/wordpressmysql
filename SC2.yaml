@@ -1,0 +1,9 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: sc2-3a
+provisioner: cinder.csi.openstack.org
+parameters:
+  type: fast.ru-3a
+  availability: ru-3a
+allowVolumeExpansion: true
