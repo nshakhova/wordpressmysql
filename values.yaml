@@ -1,0 +1,58 @@
+# Default values for .helm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+sc1:
+  type: fast.ru-3a
+  name: sc1-3a
+  availability: ru-3a
+sc2:
+  type: fast.ru-3a
+  name: sc2-3a
+  availability: ru-3a
+
+mysql:
+  secret:
+    name: mysql-pass
+    pass: pass
+    type: Opaque
+  pvc:
+    name: claim-db-wordpress-one
+    storageClassName: sc2-3a
+    app: wordpress-one
+  name: wordpress-db-one
+  app: wordpress
+  affinity:
+    zone: ru-3a
+  containers:
+    image: mysql:5.7
+    name: MYSQL_ROOT_PASSWORD
+    containerPort: 3306
+    volumeMountsname: db-storage
+    mountPath: /var/lib/mysql
+  volumes:
+    name: db-storage
+    persistentVolumeClaim: claim-db-wordpress-one
+wp:
+  pvc:
+    name: wp-pv-claim
+    storageClassName: sc1-3a
+    app: wordpress
+  name: wordpress
+  app: wordpress
+  affinity:
+    zone: ru-3a
+  containers:
+    image: wordpress:4.8-apache
+    env:
+      name1: WORDPRESS_DB_HOST
+      value: wordpress-db-one
+      name2: WORDPRESS_DB_PASSWORD
+    containerPort: 80
+    volumeMounts:
+      name: wordpress-persistent-storage
+      mountPath: /var/www/html
+    persistentVolumeClaim: wp-pv-claim
+
+storage: 1Gi
+

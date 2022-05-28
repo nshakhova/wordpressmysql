@@ -1,9 +1,9 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-  name: sc1-3a
+  name: {{ .Values.sc1.name }}
 provisioner: cinder.csi.openstack.org
 parameters:
-  type: fast.ru-3a
-  availability: ru-3a
+  type: {{ .Values.sc1.type }}
+  availability: {{ .Values.sc1.availability }}
 allowVolumeExpansion: true

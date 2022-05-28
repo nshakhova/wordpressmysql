@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: wp-pv-claim
+  name: {{ .Values.wp.pvc.name }}
   labels:
-    app: wordpress
+    app: {{ .Values.wp.pvc.app }}
 spec:
-  storageClassName: sc1-3a
+  storageClassName: {{ .Values.wp.pvc.storageClassName }}
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
+      storage: {{ .Values.storage }}
